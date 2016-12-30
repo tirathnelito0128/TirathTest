@@ -1,0 +1,5 @@
+projectKey=org.sonarsource.example.groovy:groovy-gradle
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/org.sonarsource.example.groovy:groovy-gradle
+ceTaskId=AVlFmtTiyv4kLc6nn3RU
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVlFmtTiyv4kLc6nn3RU

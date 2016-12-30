@@ -1,0 +1,72 @@
+#!groovy
+// The above triggers groovy syntax highlighting in vim
+
+plugins {
+ id "org.sonarqube" version "2.0.1"
+
+}
+
+/* To test a SNAPSHOT in the maven local repo:
+
+buildscript {
+    repositories {
+      mavenCentral()
+      mavenLocal()
+    }
+    dependencies { classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1-SNAPSHOT' }
+}
+
+apply plugin: 'org.sonarqube'
+*/
+apply plugin: "jacoco"
+apply plugin: 'groovy'
+
+group = 'org.sonarsource.example.groovy'
+description = 'Simple Groovy with Gradle'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jacoco {
+	toolVersion = "0.7.4.201502262128"
+	reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination "${buildDir}/jacocoHtml"
+	}
+}
+
+test {
+	jacoco {
+		append = false
+		destinationFile = file("$buildDir/jacoco/jacoco.exec")
+		classDumpFile = file("$buildDir/jacoco/classpathdumps")
+	}
+}
+
+sonarqube {
+	properties {
+		property "sonar.jacoco.reportPath", "$buildDir/jacoco/jacoco.exec"
+	}
+}
+
+dependencies {
+  compile 'org.codehaus.groovy:groovy-all:2.4.7'
+  testCompile "junit:junit:4.11"
+}
+
+
+repositories {
+  jcenter()
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url "https://repox.sonarsource.com/sonarsource"
+  }
+}
+
